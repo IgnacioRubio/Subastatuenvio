@@ -27,11 +27,11 @@
 				<div class="navbar-header">
 					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navegacion-ig">
 						<span class="sr-only">Desplegar / Ocultar Menú</span>
-						<sapn class="icon-bar"></sapn>
-						<sapn class="icon-bar"></sapn>
-						<sapn class="icon-bar"></sapn>
-						<sapn class="icon-bar"></sapn>
-						<sapn class="icon-bar"></sapn>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
 					</button>
 					<a href="../index.html" class="navbar-brand"><img src="../images/logo1.png" alt="Logo SUBASTATUENVIO"></a>
 				</div>
@@ -60,7 +60,11 @@
 				<h2 class="border-bottom02">REGISTRO</h2>
 			</header>
 
-			<form>
+			<div class="bg-success padding-15" id="divSuccess" hidden></div>
+
+			<div class="bg-danger padding-15" id="divDanger" hidden></div>
+
+			<form id="form_registro" action="../php/registrarse.php" method="post">
 
 				<!-- DATOS PERSONALES -->
 				<header>
@@ -69,12 +73,12 @@
 
 				<div class="form-group">
 					<label>Nombre:
-						<input type="text" placeholder="*Nombre" class="form-control" required> 
+						<input type="text" maxlength="20" pattern="[A-Za-zÁÉÍÓÚÜáéíóúüÑñ]+[ ]?[A-Za-zÁÉÍÓÚÜáéíóúüÑñ]*" title="Introduzca elementos alfabéticos." placeholder="*Nombre" class="form-control" id="nombre" name="nombre" required> 
 					</label>
 				
 
 					<label>Apellidos:
-						<input type="text" placeholder="*Apellidos" class="form-control" required>
+						<input type="text" maxlength="40" pattern="[A-Za-zÁÉÍÓÚÜáéíóúüÑñ]+[ ]?[A-Za-zÁÉÍÓÚÜáéíóúüÑñ]*" title="Introduzca elementos alfabéticos." placeholder="*Apellidos" class="form-control" id="apellidos" name="apellidos" required>
 					</label>
 				</div>
 
@@ -85,21 +89,21 @@
 				
 				<div class="form-group">
 					<label>Email/Correo electrónico:
-						<input type="email" placeholder="*Email" class="form-control" required>
+						<input type="email" maxlength="40" placeholder="*Email" class="form-control" id="email" name="email" required>
 					</label>
 				</div>
 
 				<div class="form-group">
 					<label>Contraseña:
-						<input type="password" placeholder="*Contraseña" class="form-control" required>
+						<input type="password" maxlength="20" pattern=".{6,}" title="Longitud mínima de la contraseña 6 caracteres." placeholder="*Contraseña" class="form-control" id="password" name="password" required>
 					</label>
 				</div>
 
 				<div class="form-group">
 					<label>Role:
-						<select class="form-control" required>
-							<option value="1">Remitente (desea hacer envíos)</option>
-							<option value="2">Transportista (desea pujar y llevar cargas)</option>
+						<select class="form-control" id="role" name="role" required>
+							<option value="remitentes">Remitente (desea hacer envíos)</option>
+							<option value="transportistas">Transportista (desea pujar y llevar cargas)</option>
 						</select>
 					</label>
 				</div>
@@ -136,6 +140,7 @@
 		</div>
 	</footer>
 
+	<script src="../js/registrarse.js"></script>
 
 	<script src="../js/jquery.js"></script>
 	<script src="../js/bootstrap.min.js"></script>

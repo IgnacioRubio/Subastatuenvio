@@ -11,14 +11,15 @@
 	<link rel="shortcut icon" type="image/x-icon" href="../images/favicon.ico"/>
 	<link rel="stylesheet" href="../css/bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="../css/support.css">
-	<meta name="description" content="Inicio Sesión | SUBASTATUENVÍO"/>
-	<title>Inicio Sesión | SUBASTATUENVÍO</title>
+	<meta name="description" content="Inicio | SUBASTATUENVÍO"/>
+	<title>Inicio | SUBASTATUENVÍO</title>
 	
 
 </head>
 
 
 <body>
+
 
 	<!-- CABECERA -->
 	<header>
@@ -38,60 +39,28 @@
 				<!-- menu -->
 				<div class="collapse navbar-collapse" id="navegacion-ig">
 					<ul class="nav navbar-nav">
-						<li><a href="../index.html">INICIO</a></li>
-						<li><a href="como_funciona.html">CÓMO FUNCIONA</a></li>
-						<li><a href="subastas.html">SUBASTAS</a></li>
-						<li><a href="contacto.html">CONTACTO</a></li>
-						<li class="active"><a href="iniciar_sesion.html">INICAR SESIÓN</a></li>
-						<li><a href="registrarse.html">REGISTRO</a></li>
+						<li class="active"><a href="../index.html">INICIO</a></li>
+						<li><a href="../html/como_funciona.html">CÓMO FUNCIONA</a></li>
+						<li><a href="../html/subastas.html">SUBASTAS</a></li>
+						<li><a href="../html/contacto.html">CONTACTO</a></li>
+						<li id="liMenuIniciar"><a href="../html/iniciar_sesion.html">INICAR SESIÓN</a></li>
+						<li id="liMenuRegistro"><a href="../html/registrarse.html">REGISTRO</a></li>
+						<li id="liMenuPerfil"><a href="perfil.php">TU PERFIL</a></li>
 					</ul>
+
 				</div>
+
+
 			</div>
 		</nav>
-		
+				
 	</header>
 
 	<!-- CUERPO -->
-	<section class="main container">
+	<h2>Tu perfilaco</h2>
 
-		<article>
+	<button id="btnSalir">Cerrar Sesión</button>
 
-			<header class="gap-bo-20">
-				<h2 class="border-bottom02">INICIAR SESIÓN</h2>
-			</header>
-
-			<form id="form_inicio" action="../php/iniciar_sesion.php" method="post">
-				
-				<div class="form-group">
-					<label>Email:
-						<input type="email" placeholder="*Email" class="form-control" id="email" name="email" required>
-					</label>
-				</div>
-
-				<div class="form-group">
-					<label>Contraseña:
-						<input type="password" placeholder="*Contraseña" class="form-control" id="password" name="password" required>
-					</label>
-				</div>
-
-				<div class="form-group">
-					<label>Role:
-						<select class="form-control" id="role" name="role" required>
-							<option value="remitentes">Remitente</option>
-							<option value="transportistas">Transportista</option>
-						</select>
-					</label>
-				</div>
-
-				<input type="submit" class="btn btn-default" value="Iniciar Sesión">
-
-			</form>
-			
-			<p class="bg-danger padding-15 gap-to-40" id="pDanger" hidden>
-			</p>
-
-		</article>
-	</section>
 
 	<!-- PIE DE PAGINA -->
 	<footer class="">
@@ -100,9 +69,9 @@
 				<div class="col-xs-6">
 					<ul class="list-inline text-right">
 						<li><a href="../index.html">INICIO</a></li>
-						<li><a href="como_funciona.html">CÓMO FUNCIONA</a></li>
-						<li><a href="subastas.html">SUBASTAS</a></li>
-						<li><a href="contacto.html">CONTACTO</a></li>
+						<li><a href="../html/como_funciona.html">CÓMO FUNCIONA</a></li>
+						<li><a href="../html/subastas.html">SUBASTAS</a></li>
+						<li><a href="../html/contacto.html">CONTACTO</a></li>
 					</ul>
 				</div>
 				<div class="col-xs-6">
@@ -112,8 +81,9 @@
 		</div>
 	</footer>
 
-
-	<script src="../js/iniciar_sesion.js"></script>
+		
+	<script src="../js/roles.js"></script>
+	<script src="../js/perfil.js"></script>
 
 	<script src="../js/jquery.js"></script>
 	<script src="../js/bootstrap.min.js"></script>
@@ -121,5 +91,3 @@
 </body>
 
 </html>
-
-

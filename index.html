@@ -20,6 +20,7 @@
 
 <body>
 
+
 	<!-- CABECERA -->
 	<header>
 		<nav class="navbar navbar-inverse navbar-static-top" role="navigation">
@@ -27,11 +28,11 @@
 				<div class="navbar-header">
 					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navegacion-ig">
 						<span class="sr-only">Desplegar / Ocultar Menú</span>
-						<sapn class="icon-bar"></sapn>
-						<sapn class="icon-bar"></sapn>
-						<sapn class="icon-bar"></sapn>
-						<sapn class="icon-bar"></sapn>
-						<sapn class="icon-bar"></sapn>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
 					</button>
 					<a href="index.html" class="navbar-brand"><img src="images/logo1.png" alt="Logo SUBASTATUENVIO"></a>
 				</div>
@@ -42,13 +43,17 @@
 						<li><a href="html/como_funciona.html">CÓMO FUNCIONA</a></li>
 						<li><a href="html/subastas.html">SUBASTAS</a></li>
 						<li><a href="html/contacto.html">CONTACTO</a></li>
-						<li><a href="html/iniciar_sesion.html">INICAR SESIÓN</a></li>
-						<li><a href="html/registrarse.html">REGISTRO</a></li>
+						<li id="liMenuIniciar"><a href="html/iniciar_sesion.html">INICAR SESIÓN</a></li>
+						<li id="liMenuRegistro"><a href="html/registrarse.html">REGISTRO</a></li>
+						<li id="liMenuPerfil"><a href="php/perfil.php">TU PERFIL</a></li>
 					</ul>
+
 				</div>
+
+
 			</div>
 		</nav>
-		
+				
 	</header>
 
 	<!-- CUERPO -->
@@ -249,6 +254,7 @@
 		</div>
 	</footer>
 
+	<script src="js/roles.js"></script>
 
 	<script src="js/jquery.js"></script>
 	<script src="js/bootstrap.min.js"></script>
