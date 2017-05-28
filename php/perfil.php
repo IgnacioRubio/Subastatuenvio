@@ -41,11 +41,12 @@
 					<ul class="nav navbar-nav">
 						<li class="active"><a href="../index.html">INICIO</a></li>
 						<li><a href="../html/como_funciona.html">CÓMO FUNCIONA</a></li>
-						<li><a href="../html/subastas.html">SUBASTAS</a></li>
+						<li><a href="subastas.php">SUBASTAS</a></li>
 						<li><a href="../html/contacto.html">CONTACTO</a></li>
-						<li id="liMenuIniciar"><a href="../html/iniciar_sesion.html">INICAR SESIÓN</a></li>
+						<li id="liMenuIniciar"><a href="../html/iniciar_sesion.html">INICIAR SESIÓN</a></li>
 						<li id="liMenuRegistro"><a href="../html/registrarse.html">REGISTRO</a></li>
-						<li id="liMenuPerfil"><a href="perfil.php">TU PERFIL</a></li>
+						<li id="liMenuEnviar"><a href="../html/enviar.html">ENVIAR</a></li>
+						<li class="active" id="liMenuPerfil"><a href="perfil.php">TU PERFIL</a></li>
 					</ul>
 
 				</div>
@@ -59,7 +60,7 @@
 	<!-- CUERPO -->
 	<h2>Tu perfilaco</h2>
 
-	<button id="btnSalir">Cerrar Sesión</button>
+	<button class="btn btn-default" id="btnSalir">CERRAR SESIÓN</button>
 
 
 	<!-- PIE DE PAGINA -->

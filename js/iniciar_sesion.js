@@ -52,7 +52,7 @@ function signInValidation () {
 	ajax.send("email=" + email + "&password=" + pass + "&role=" + role);
 }
 
-/// SUPORTER FUNCTIONS
+/// SUPPORTER FUNCTIONS
 
 function getXMLHTTP () {
 	var obj = null;

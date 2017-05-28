@@ -40,10 +40,12 @@
 					<ul class="nav navbar-nav">
 						<li><a href="../index.html">INICIO</a></li>
 						<li><a href="como_funciona.html">CÓMO FUNCIONA</a></li>
-						<li class="active"><a href="subastas.html">SUBASTAS</a></li>
+						<li><a href="../php/subastas.php">SUBASTAS</a></li>
 						<li><a href="contacto.html">CONTACTO</a></li>
-						<li><a href="iniciar_sesion.html">INICAR SESIÓN</a></li>
-						<li><a href="registrarse.html">REGISTRO</a></li>
+						<li id="liMenuIniciar"><a href="iniciar_sesion.html">INICIAR SESIÓN</a></li>
+						<li id="liMenuRegistro"><a href="registrarse.html">REGISTRO</a></li>
+						<li class="active" id="liMenuEnviar"><a href="enviar.html">ENVIAR</a></li>
+						<li id="liMenuPerfil"><a href="../php/perfil.php">TU PERFIL</a></li>
 					</ul>
 				</div>
 			</div>
@@ -60,56 +62,55 @@
 				<h2 class="border-bottom02">NUEVO ENVÍO/SUBASTA</h2>
 			</header>
 
-			<form>
+			<form id="form_enviar" action="../php/enviar.php" method="post" enctype="multipart/form-data">
 				<!--TITULO-->
 				<div class="form-group">
 					<label>Título de la subasta:
-						<input type="text" placeholder="*Título" class="form-control" required> 
+						<input type="text" placeholder="*Título" class="form-control" id="titulo" name="titulo" required> 
 					</label>
 				</div>
 				
 				<!--MEDIDAS / PESO-->
 				<div class="form-group">
 					<label>Medidas:
-						<input type="text" placeholder="Ej.: 50 x 50 x 50 m" class="form-control"> 
+						<input type="text" placeholder="Ej.: 50 x 50 x 50 m" id="medidas" name="medidas" class="form-control"> 
 					</label>
 				
 
 					<label>Peso:
-						<input type="text" placeholder="Ej.: 50 Kg." class="form-control">
+						<input type="text" placeholder="Ej.: 50 Kg." id="peso" name="peso" class="form-control">
 					</label>
 				</div>
 
 				<!--ORIGEN / DESTINO-->
 				<div class="form-group">
 					<label>Origen:
-						<input type="text" placeholder="Ej.: Avilés" class="form-control" required> 
+						<input type="text" placeholder="Ej.: Avilés" id="origen" name="origen" class="form-control" required> 
 					</label>
 				
 
 					<label>Destino:
-						<input type="text" placeholder="Ej.: Alicante" class="form-control" required>
+						<input type="text" placeholder="Ej.: Alicante" id="destino" name="destino" class="form-control" required>
 					</label>
 				</div>
 				
 				<!--SUBIR IMAGENES-->
 				<div class="form-group">
 					<label>Imagen del producto:
-						<input type="file" name="pic" accept="image/*">
-						<!-- generar el mismo input cuando haya subido una así todo el rato-->
+						<input type="file" id="imagen" name="imagen" accept="image/*" required>
 					</label>
 				</div>
 
 				<!--DURACIÓN SUBASTA-->
 				<div class="form-group">
 					<label>Duración subasta:
-						<select class="form-control" required>
-							<option value="1">4 horas</option>
-							<option value="2">8 horas</option>
-							<option value="3">12 horas</option>
-							<option value="4">24 horas</option>
-							<option value="5">48 horas</option>
-							<option value="6">72 horas</option>
+						<select class="form-control" id="duracion" name="duracion" required>
+							<option value="4">4 horas</option>
+							<option value="8">8 horas</option>
+							<option value="12">12 horas</option>
+							<option value="24">24 horas</option>
+							<option value="48">48 horas</option>
+							<option value="72">72 horas</option>
 						</select>
 					</label>
 				</div>
@@ -118,48 +119,50 @@
 					<h4>CATEGORÍAS</h4>
 
 					<div class="radio"> 
-						<label><input type="radio" name="cat"> Hogar</label>
+						<label><input type="radio" value="hogar" id="categoria" name="categoria"> Hogar</label>
 					</div>
 
 					<div class="radio"> 
-						<label><input type="radio" name="cat"> Vehículos</label>
+						<label><input type="radio" value="vehiculos" id="categoria" name="categoria"> Vehículos</label>
 					</div>
 
 					<div class="radio"> 
-						<label><input type="radio" name="cat"> Carga parcial</label>
+						<label><input type="radio" value="carga parcial" id="categoria" name="categoria"> Carga parcial</label>
 					</div>
 
 					<div class="radio"> 
-						<label><input type="radio" name="cat"> Carga completa</label>
+						<label><input type="radio" value="carga completa" id="categoria" name="categoria"> Carga completa</label>
 					</div>
 
 					<div class="radio"> 
-						<label><input type="radio" name="cat"> Animales</label>
+						<label><input type="radio" value="animales" id="categoria" name="categoria"> Animales</label>
 					</div>
 
 					<div class="radio"> 
-						<label><input type="radio" name="cat"> Industrial y empresarial</label>
+						<label><input type="radio" value="industrial" id="categoria" name="categoria"> Industrial y empresarial</label>
 					</div>
 
 					<div class="radio"> 
-						<label><input type="radio" name="cat"> Alimentación</label>
+						<label><input type="radio" value="alimentacion" id="categoria" name="categoria"> Alimentación</label>
 					</div>
 
 					<div class="radio"> 
-						<label><input type="radio" name="cat"> Otros</label>
+						<label><input type="radio" value="otros" id="categoria" name="categoria"> Otros</label>
 					</div>
 
 				</div>
 
 				<div class="form-group">
 					<label>Descripción:
-						<textarea class="form-control" placeholder="*Descripción de la subasta" cols="40" rows="5" required></textarea>
+						<textarea class="form-control" placeholder="*Descripción de la subasta" id="descripcion" name="descripcion" cols="40" rows="5" required></textarea>
 					</label>
 				</div>
 
 				<input type="submit" class="btn btn-default" value="Crear envío/subasta">
 
 			</form>
+
+			<p class="bg-danger padding-15 gap-to-40" id="pDanger" hidden></p>
 			
 		</article>
 	</section>
@@ -172,7 +175,7 @@
 					<ul class="list-inline text-right">
 						<li><a href="../index.html">INICIO</a></li>
 						<li><a href="como_funciona.html">CÓMO FUNCIONA</a></li>
-						<li><a href="subastas.html">SUBASTAS</a></li>
+						<li><a href="../php/subastas.php">SUBASTAS</a></li>
 						<li><a href="contacto.html">CONTACTO</a></li>
 					</ul>
 				</div>
@@ -183,6 +186,9 @@
 		</div>
 	</footer>
 
+
+	<script src="../js/enviar.js"></script>
+	<script src="../js/roles.js"></script>
 
 	<script src="../js/jquery.js"></script>
 	<script src="../js/bootstrap.min.js"></script>

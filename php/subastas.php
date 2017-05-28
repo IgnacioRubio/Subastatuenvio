@@ -39,13 +39,13 @@
 				<div class="collapse navbar-collapse" id="navegacion-ig">
 					<ul class="nav navbar-nav">
 						<li><a href="../index.html">INICIO</a></li>
-						<li><a href="como_funciona.html">CÓMO FUNCIONA</a></li>
-						<li class="active"><a href="subastas.html">SUBASTAS</a></li>
-						<li><a href="contacto.html">CONTACTO</a></li>
-						<li id="liMenuIniciar"><a href="iniciar_sesion.html">INICIAR SESIÓN</a></li>
-						<li id="liMenuRegistro"><a href="registrarse.html">REGISTRO</a></li>
-						<li id="liMenuEnviar"><a href="enviar.html">ENVIAR</a></li>
-						<li id="liMenuPerfil"><a href="../php/perfil.php">TU PERFIL</a></li>
+						<li><a href="../html/como_funciona.html">CÓMO FUNCIONA</a></li>
+						<li class="active"><a href="subastas.php">SUBASTAS</a></li>
+						<li><a href="../html/contacto.html">CONTACTO</a></li>
+						<li id="liMenuIniciar"><a href="../html/iniciar_sesion.html">INICIAR SESIÓN</a></li>
+						<li id="liMenuRegistro"><a href="../html/registrarse.html">REGISTRO</a></li>
+						<li id="liMenuEnviar"><a href="../html/enviar.html">ENVIAR</a></li>
+						<li id="liMenuPerfil"><a href="perfil.php">TU PERFIL</a></li>
 					</ul>
 				</div>
 			</div>
@@ -138,87 +138,77 @@
 
 					<?php
 
-					// DATA BASE CONNECTION & QUERY
-					echo "HOLA";
-					
-					$CONEXION_DB = 'mysql:host=127.0.0.1; dbname=subastatuenvio';
-					$USUARIO_DB = 'ig';
-					$PASS_DB = '';
+						// DATA BASE CONNECTION & QUERY
 
-					try {
-						// Conecting with the DB
-						$db_subastatuenvio = new PDO($CONEXION_DB, $USUARIO_DB, $PASS_DB);
+						$CONEXION_DB = 'mysql:host=127.0.0.1; dbname=subastatuenvio';
+						$USUARIO_DB = 'ig';
+						$PASS_DB = '';
 
-						
-						$sql = "SELECT titulo, imagen, origen, destino, duracion, fecha_creacion FROM subastas";
+						try {
+							// Conecting with the DB
+							$db_subastatuenvio = new PDO($CONEXION_DB, $USUARIO_DB, $PASS_DB);
 
+							
+							$sql = "SELECT id_subasta, titulo, imagen, origen, destino, duracion, fecha_creacion FROM subastas";
 
-						// preparing the query 
-						$resultado = $db_subastatuenvio->prepare($sql);
+							// preparing the query 
+							$resultado = $db_subastatuenvio->prepare($sql);
 
 
-						$resultado->execute();
+							$resultado->execute();
 
-						$numRows = $resultado->rowCount();
+							$numRows = $resultado->rowCount();
 
-						$resultado->closeCursor();
 
-						if ($numRows==1) {
-							// at least there is an auction
+							if ($numRows>=1) {
+								// at least there is an auction
+								while ($registro = $resultado->fetch()) {
 
-							while ($registro = $resultado->fetch()) {
-								echo 'Titulo: ' . $registro['titulo'] . 'imagen' . $registro['imagen'] . 'origen' . $registro['origen']. 'destino' . $registro['destino']. 'duracion' . $registro['duracion']. 'fecha_creacion' . $registro['fecha_creacion'];
+									$horas_restantes = $registro['duracion'] - round((getdate()[0] - $registro['fecha_creacion']) / 60 / 60);
+
+									if ($horas_restantes >= 0) {
+
+										echo "<tr>";
+
+										echo "<td>";
+
+										echo '<form action="subasta.php" method="post">';
+										echo '<input type="text" id="id_subasta" name="id_subasta" value="' . $registro['id_subasta'] . '" hidden>';
+										echo '<input class="btn btn-link" type="submit" value="' . $registro['titulo'] . '">';
+										echo '</form>';
+										echo '<img class="img-80x80" src="../' . $registro['imagen'] . '" alt="imagen">';
+										echo "</td>";
+
+										echo "<td>";
+										echo "<p>1000 €</p>";
+										echo "</td>";
+
+										echo "<td>";
+										echo "<p>" . $registro['origen'] . "</p>";
+										echo "</td>";
+
+										echo "<td>";
+										echo "<p>" . $registro['destino'] . "</p>";
+										echo "</td>";
+
+										echo "<td>";
+										echo "<p>" . $horas_restantes . " h.</p>";
+										echo "</td>";
+
+										echo "</tr>";
+									}
+								}
+
 							}
+							else {
+								echo "No hay datos";
+							}
+						}
 
+						catch (PDOException $e) {
+							die("Error: " .$e);
 						}
 					?>
-
-					<tr>
-						<td>
-							<p>Título #1</p>
-							<img class="img-80x80" src="../images/sample.png" alt="">
-						</td>
-						<td>
-							<p>1000 €</p>
-						</td>
-
-						<td>
-							<p>Avilés</p>
-						</td>
-
-						<td>
-							<p>Alicante</p>
-						</td>
-
-						<td>
-							<p>24 h.</p>
-						</td>
-
-					</tr>
-
-					<tr>
-
-						<td>
-							<p>Título #2</p>
-							<img class="img-80x80" src="../images/sample.png" alt="">
-						</td>
-						<td>
-							<p>1000 €</p>
-						</td>
-
-						<td>
-							<p>Avilés</p>
-						</td>
-
-						<td>
-							<p>Alicante</p>
-						</td>
-
-						<td>
-							<p>24 h.</p>
-						</td>
-
-					</tr>
 
 				  </table>
 				</div>
@@ -234,9 +224,9 @@
 				<div class="col-xs-6">
 					<ul class="list-inline text-right">
 						<li><a href="../index.html">INICIO</a></li>
-						<li><a href="como_funciona.html">CÓMO FUNCIONA</a></li>
-						<li><a href="subastas.html">SUBASTAS</a></li>
-						<li><a href="contacto.html">CONTACTO</a></li>
+						<li><a href="../html/como_funciona.html">CÓMO FUNCIONA</a></li>
+						<li><a href="../html/subastas.html">SUBASTAS</a></li>
+						<li><a href="../html/contacto.html">CONTACTO</a></li>
 					</ul>
 				</div>
 				<div class="col-xs-6">
@@ -255,4 +245,3 @@
 </body>
 
 </html>
-

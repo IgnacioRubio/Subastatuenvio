@@ -12,8 +12,8 @@
 	// DATA BASE CONNECTION & QUERY
 
 	$CONEXION_DB = 'mysql:host=127.0.0.1; dbname=subastatuenvio';
-	$USUARIO_DB = 'root';
-	$PASS_DB = 'gottix';
+	$USUARIO_DB = 'ig';
+	$PASS_DB = '';
 
 	try {
 		// Conecting with the DB
