@@ -56,7 +56,6 @@
 	<section class="main">
 
 		<header class="container">
-			<h2>#TÍTULO</h2>
 
 			<h4 class="gap-to-40 border-bottom01 padd-bo-10">INFORMACIÓN DEL ENVÍO</h4>
 		</header>
@@ -118,12 +117,12 @@
 
 							echo "<div>";
 							echo "<h5>PUJA ACTUAL:</h5>";
-							echo "<p>50 € / - </p>";
+							echo "<p>" . getCurrentBid($id_subasta) . "</p>";
 							echo "</div>";
 
 							echo "<div>";
 							echo "<h5>NÚMERO DE PUJAS:</h5>";
-							echo "<p>5 / - </p>";
+							echo "<p>" . countAuction($id_subasta) . "</p>";
 							echo "</div>";
 
 							echo "<div>";
@@ -145,57 +144,187 @@
 							echo "</div>";
 							echo "</div>";
 						}
-					}
-
-					else {
-						echo "No hay datos";
-					}				
+					}			
 				}
 
 				catch (PDOException $e) {
 					die("Error: " .$e);
 				}
+
+
+				function getCurrentBid ($id_auction) {
+					$current_bid = 'Ninguna';
+
+					$CONEXION_DB = 'mysql:host=127.0.0.1; dbname=subastatuenvio';
+					$USUARIO_DB = 'ig';
+					$PASS_DB = '';
+
+
+					try {
+						// Conecting with the DB
+						$db_subastatuenvio = new PDO($CONEXION_DB, $USUARIO_DB, $PASS_DB);
+
+						$sql1 = "SELECT MAX(puja) FROM pujas WHERE subasta = :subasta";
+
+						$result = $db_subastatuenvio->prepare($sql1);
+
+						$result->execute(array(":subasta" => $id_auction));
+
+						$numRows = $result->rowCount();
+
+						if ($numRows > 0) {
+							$current_bid = $result->fetch()[0];
+						}
+						return $current_bid . " €";
+					}
+					catch (PDOException $e) {
+						die("Error: " .$e);
+					}
+
+				}
+
+				function countAuction ($id_auction) {
+					$number_bids = '0';
+
+					$CONEXION_DB = 'mysql:host=127.0.0.1; dbname=subastatuenvio';
+					$USUARIO_DB = 'ig';
+					$PASS_DB = '';
+
+
+					try {
+						// Conecting with the DB
+						$db_subastatuenvio = new PDO($CONEXION_DB, $USUARIO_DB, $PASS_DB);
+
+						$sql1 = "SELECT COUNT(subasta) FROM pujas WHERE subasta = :subasta";
+
+						$result = $db_subastatuenvio->prepare($sql1);
+
+						$result->execute(array(":subasta" => $id_auction));
+
+						$numRows = $result->rowCount();
+
+						if ($numRows > 0) {
+							$number_bids = $result->fetch()[0];
+						}
+
+						return $number_bids;
+					}
+					catch (PDOException $e) {
+						die("Error: " .$e);
+					}
+
+				}
+			?>
+
+			<?php
+
+			try {
+				// Conecting with the DB
+				$db_subastatuenvio = new PDO($CONEXION_DB, $USUARIO_DB, $PASS_DB);
+
+							
+					$sql = "SELECT puja, transportista FROM pujas WHERE subasta = :id_subasta ORDER BY puja ASC";
+
+					// preparing the query 
+					$resultado = $db_subastatuenvio->prepare($sql);
+
+					$id_subasta = $_POST['id_subasta'];
+
+
+					$resultado->execute(array(":id_subasta"=>$id_subasta));
+
+					$numRows = $resultado->rowCount();
+					
+					echo '<div class="table-responsive col-md-8">';
+					echo '<h5>PUJAS:</h5>';
+					echo '<table class="table table-striped">';
+
+					echo '<tr>';
+					echo '<th>Transportista</th>';
+					echo '<th>Puja</th>';
+					echo '</tr>';
+
+					if ($numRows>=1) {
+						// at least there is a bid
+						while ($registro = $resultado->fetch()) {
+
+							echo '<tr>';
+							echo '<td>' .$registro['transportista']. '</td>';
+							echo '<td>' .$registro['puja']. ' €</td>';
+							echo '</tr>';
+						}
+					}
+
+					echo '</table>';
+					echo '</div>';
+				
+				}
+
+				catch (PDOException $e) {
+					die("Error: " .$e);
+				}
+
 			?>
 			
 
-			<div class="table-responsive col-md-8">
-				<h5>PUJAS:</h5>
-				  <table class="table table-striped">
-					<tr>
-						<th>Transportista</th>
-						<th>Puja</th>
-					</tr>
-
-					<tr>
-						<td>
-							<p>Germías</p>
-						</td>
-						<td>
-							<p>1000 €</p>
-						</td>
-
-					</tr>
-
-					<tr>
-
-						<td>
-							<p>Geremías</p>
-						</td>
-						<td>
-							<p>1000 €</p>
-						</td>
-
-					</tr>
-
-				</table>
-				
-			</div>
-
 			<!-- ROLE TRANSPORTISTA -->
-			<div id="divBid" class="col-sm-12">
-				<button class="btn btn-default">REALIZAR PUJA</button>
+			<div>
+
+				<p id="pMess" class="bg-warning padding-15 gap-to-40" hidden></p>
+				<p id="pMessSucc" class="bg-success padding-15 gap-to-40" hidden></p>
 			</div>
-			
+
+			<div id="divBid" class="col-sm-12">
+				<?php
+
+					// DATA BASE CONNECTION & QUERY
+					$CONEXION_DB = 'mysql:host=127.0.0.1; dbname=subastatuenvio';
+					$USUARIO_DB = 'ig';
+					$PASS_DB = '';
+
+					try {
+						// Conecting with the DB
+						$db_subastatuenvio = new PDO($CONEXION_DB, $USUARIO_DB, $PASS_DB);
+
+								
+						$sql = "SELECT duracion, fecha_creacion FROM subastas WHERE id_subasta LIKE :id_subasta";
+
+						// preparing the query 
+						$resultado = $db_subastatuenvio->prepare($sql);
+
+						$id_subasta = $_POST['id_subasta'];
+
+
+						$resultado->execute(array(":id_subasta"=>$id_subasta));
+
+						$registro = $resultado->fetch();
+
+						$horas_restantes = $registro['duracion'] - round((getdate()[0] - $registro['fecha_creacion']) / 60 / 60);
+
+						if ($horas_restantes >= 0) {
+
+							echo "<form id='form_puja' action='crear_puja.php' method='post'>";
+							echo '<div class="form-group"> <label>Puja: <input type="number" placeholder="*Puja en euros" class="form-control" id="puja" name="puja" min="0" step="0.01" required></label> </div>';
+							echo '<input type="text" id="id_subasta" name="id_subasta" value="' . $id_subasta . '" hidden>';
+							echo "<input class='btn btn-default' type='submit' value='PUJAR'>";
+							echo "</form>";
+
+
+						}
+
+						else {
+							echo '<p class="bg-danger padding-15 gap-to-40">Subasta finalizada, ya no se pueden hacer más pujas.</p>';
+						}
+
+				
+					}
+
+					catch (PDOException $e) {
+						die("Error: " .$e);
+					}
+
+				?>
+			</div>
 
 		</article>
 
@@ -224,6 +353,7 @@
 		</div>
 	</footer>
 
+	<script src="../js/crear_puja.js"></script>
 	<script src="../js/roles.js"></script>
 	<script src="../js/roles_subasta.js"></script>
 

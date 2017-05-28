@@ -62,40 +62,40 @@
 			<div class="row">
 				<div class="col-md-4">
 					
-					<form class="">
+					<form class="" action="" method="post">
 						<div class="form-group">
 							<h4>CATEGORÍAS</h4>
 
-							<div class="checkbox"> 
-								<label><input type="checkbox"> Hogar (41)</label>
+							<div class="radio"> 
+								<label><input value="Hogar" id="cat" name="cat" type="radio"> Hogar (41)</label>
 							</div>
 
-							<div class="checkbox"> 
-								<label><input type="checkbox"> Vehículos (42)</label>
+							<div class="radio"> 
+								<label><input value="Vehiculos" id="cat" name="cat" type="radio"> Vehículos (42)</label>
 							</div>
 
-							<div class="checkbox"> 
-								<label><input type="checkbox"> Carga parcial (75)</label>
+							<div class="radio"> 
+								<label><input value="Carga Parcial" id="cat" name="cat" type="radio"> Carga parcial (75)</label>
 							</div>
 
-							<div class="checkbox"> 
-								<label><input type="checkbox"> Carga completa (30)</label>
+							<div class="radio"> 
+								<label><input value="Carga Completa" id="cat" name="cat" type="radio"> Carga completa (30)</label>
 							</div>
 
-							<div class="checkbox"> 
-								<label><input type="checkbox"> Animales (19)</label>
+							<div class="radio"> 
+								<label><input value="Animales" id="cat" name="cat" type="radio"> Animales (19)</label>
 							</div>
 
-							<div class="checkbox"> 
-								<label><input type="checkbox"> Industrial y empresarial (14)</label>
+							<div class="radio"> 
+								<label><input value="Industrial" id="cat" name="cat" type="radio"> Industrial y empresarial (14)</label>
 							</div>
 
-							<div class="checkbox"> 
-								<label><input type="checkbox"> Alimentación (20)</label>
+							<div class="radio"> 
+								<label><input value="Alimentacion" id="cat" name="cat" type="radio"> Alimentación (20)</label>
 							</div>
 
-							<div class="checkbox"> 
-								<label><input type="checkbox"> Otros (0)</label>
+							<div class="radio"> 
+								<label><input value="Otros" id="cat" name="cat" type="radio"> Otros (0)</label>
 							</div>
 
 						</div>
@@ -104,7 +104,7 @@
 							
 							<h4>ORIGEN</h4>
 
-							<input type="text" placeholder="Localidad">
+							<input id="origen" name="origen"type="text" placeholder="Localidad">
 							p. ej.: Avilés
 						</div>
 
@@ -112,7 +112,7 @@
 							
 							<h4>DESTINO</h4>
 
-							<input type="text" placeholder="Localidad">
+							<input id="destino" name="destino" type="text" placeholder="Localidad">
 							p. ej.: Alicante
 						</div>			
 						
@@ -129,6 +129,7 @@
 				  <table class="table table-striped">
 					<tr>
 						<th>Envío</th>
+						<th>Categoría</th>
 						<th>Puja Actual</th>
 						<th>Origen</th>
 						<th>Destino</th>
@@ -144,18 +145,24 @@
 						$USUARIO_DB = 'ig';
 						$PASS_DB = '';
 
+
 						try {
 							// Conecting with the DB
 							$db_subastatuenvio = new PDO($CONEXION_DB, $USUARIO_DB, $PASS_DB);
 
 							
-							$sql = "SELECT id_subasta, titulo, imagen, origen, destino, duracion, fecha_creacion FROM subastas";
+							$sql = "SELECT id_subasta, titulo, imagen, categoria, origen, destino, duracion, fecha_creacion FROM subastas WHERE UPPER(categoria) LIKE :cat AND UPPER(origen) LIKE :orig AND UPPER(destino) LIKE :dest ";
 
 							// preparing the query 
 							$resultado = $db_subastatuenvio->prepare($sql);
 
+							$cat = '%';
+							$orig = '%';
+							$dest = '%';
 
-							$resultado->execute();
+
+
+							$resultado->execute(array(':cat' => strtoupper($cat), ':orig' => strtoupper($orig), ':dest' => strtoupper($dest)));
 
 							$numRows = $resultado->rowCount();
 
@@ -166,12 +173,13 @@
 
 									$horas_restantes = $registro['duracion'] - round((getdate()[0] - $registro['fecha_creacion']) / 60 / 60);
 
-									if ($horas_restantes >= 0) {
+									//if ($horas_restantes >= 0) {
+									if (true) {
 
 										echo "<tr>";
 
+										// TITTLE + IMAGE
 										echo "<td>";
-
 										echo '<form action="subasta.php" method="post">';
 										echo '<input type="text" id="id_subasta" name="id_subasta" value="' . $registro['id_subasta'] . '" hidden>';
 										echo '<input class="btn btn-link" type="submit" value="' . $registro['titulo'] . '">';
@@ -179,18 +187,27 @@
 										echo '<img class="img-80x80" src="../' . $registro['imagen'] . '" alt="imagen">';
 										echo "</td>";
 
+										// CATEGORY
+										echo '<td>';
+										echo "<p>". $registro['categoria'] ."</p>";
+										echo '</td>';
+
+										// BID
 										echo "<td>";
-										echo "<p>1000 €</p>";
+										echo "<p>" . getCurrentBid($registro['id_subasta']) . "</p>";
 										echo "</td>";
 
+										// FROM
 										echo "<td>";
 										echo "<p>" . $registro['origen'] . "</p>";
 										echo "</td>";
 
+										// TO
 										echo "<td>";
 										echo "<p>" . $registro['destino'] . "</p>";
 										echo "</td>";
 
+										// REAMING TIME
 										echo "<td>";
 										echo "<p>" . $horas_restantes . " h.</p>";
 										echo "</td>";
@@ -207,6 +224,39 @@
 
 						catch (PDOException $e) {
 							die("Error: " .$e);
+						}
+
+
+						function getCurrentBid ($id_auction) {
+							$current_bid = 'Ninguna';
+
+							$CONEXION_DB = 'mysql:host=127.0.0.1; dbname=subastatuenvio';
+							$USUARIO_DB = 'ig';
+							$PASS_DB = '';
+
+
+							try {
+							// Conecting with the DB
+								$db_subastatuenvio = new PDO($CONEXION_DB, $USUARIO_DB, $PASS_DB);
+
+								$sql1 = "SELECT MAX(puja) FROM pujas WHERE subasta = :subasta";
+
+								$result = $db_subastatuenvio->prepare($sql1);
+
+								$result->execute(array(":subasta" => $id_auction));
+
+								$numRows = $result->rowCount();
+
+								if ($numRows > 0) {
+									$current_bid = $result->fetch()[0];
+								}
+
+								return $current_bid . " €";
+							}
+							catch (PDOException $e) {
+								die("Error: " .$e);
+							}
+
 						}
 					?>
 

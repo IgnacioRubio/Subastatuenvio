@@ -11,8 +11,8 @@
 	<link rel="shortcut icon" type="image/x-icon" href="../images/favicon.ico"/>
 	<link rel="stylesheet" href="../css/bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="../css/support.css">
-	<meta name="description" content="Inicio | SUBASTATUENVÍO"/>
-	<title>Inicio | SUBASTATUENVÍO</title>
+	<meta name="description" content="Perfil | SUBASTATUENVÍO"/>
+	<title>Perfil | SUBASTATUENVÍO</title>
 	
 
 </head>
@@ -58,9 +58,257 @@
 	</header>
 
 	<!-- CUERPO -->
-	<h2>Tu perfilaco</h2>
+	<section class="main container">
 
-	<button class="btn btn-default" id="btnSalir">CERRAR SESIÓN</button>
+		<h2>TU PERFIL</h2>
+
+		<article class="container">
+			<?php
+
+				// DATA BASE CONNECTION & QUERY
+				if(count($_COOKIE) > 0) {
+    
+    				if (strcmp(getCookie("role"), "remitentes") == 0) {
+
+    					echo "<h3>Tus Subastas</h3>";
+
+						echo '<div class="table-responsive col-md-8">';
+						echo '<table class="table table-striped">';
+						echo '<tr>';
+						echo '<th>Envío</th>';
+						echo '<th>Categoría</th>';
+						echo '<th>Puja Actual</th>';
+						echo '<th>Origen</th>';
+						echo '<th>Destino</th>';
+						echo '<th>Finaliza</th>';
+						echo '</tr>';
+
+
+						$CONEXION_DB = 'mysql:host=127.0.0.1; dbname=subastatuenvio';
+						$USUARIO_DB = 'ig';
+						$PASS_DB = '';
+
+
+						try {
+							// Conecting with the DB
+							$db_subastatuenvio = new PDO($CONEXION_DB, $USUARIO_DB, $PASS_DB);
+
+							
+							$sql = "SELECT id_subasta, titulo, imagen, categoria, origen, destino, duracion, fecha_creacion FROM subastas WHERE remitente LIKE :email";
+
+							// preparing the query 
+							$resultado = $db_subastatuenvio->prepare($sql);
+
+							$resultado->execute(array(':email' => getCookie("email")));
+
+							$numRows = $resultado->rowCount();
+
+
+							if ($numRows>=1) {
+								// at least there is an auction
+								while ($registro = $resultado->fetch()) {
+
+									$horas_restantes = $registro['duracion'] - round((getdate()[0] - $registro['fecha_creacion']) / 60 / 60) . " h.";
+
+									if ($horas_restantes < 0) {
+										$horas_restantes = "Finalizada";
+									}
+
+									echo "<tr>";
+
+									// TITTLE + IMAGE
+									echo "<td>";
+									echo '<form action="subasta.php" method="post">';
+									echo '<input type="text" id="id_subasta" name="id_subasta" value="' . $registro['id_subasta'] . '" hidden>';
+									echo '<input class="btn btn-link" type="submit" value="' . $registro['titulo'] . '">';
+									echo '</form>';
+									echo '<img class="img-80x80" src="../' . $registro['imagen'] . '" alt="imagen">';
+									echo "</td>";
+
+									// CATEGORY
+									echo '<td>';
+									echo "<p>". $registro['categoria'] ."</p>";
+									echo '</td>';
+
+									// BID
+									echo "<td>";
+									echo "<p>" . getCurrentBid($registro['id_subasta']) . "</p>";
+									echo "</td>";
+
+									// FROM
+									echo "<td>";
+									echo "<p>" . $registro['origen'] . "</p>";
+									echo "</td>";
+
+									// TO
+									echo "<td>";
+									echo "<p>" . $registro['destino'] . "</p>";
+									echo "</td>";
+
+									// REAMING TIME
+									echo "<td>";
+									echo "<p>" . $horas_restantes . "</p>";
+									echo "</td>";
+
+									echo "</tr>";
+								
+								}
+							}
+							echo "</table>";
+							echo "</div>";
+						}
+
+						catch (PDOException $e) {
+							die("Error: " .$e);
+						}
+
+					}
+
+					if (strcmp(getCookie("role"), "transportistas") == 0) {
+						echo "<h3>Tus Pujas</h3>";
+
+						echo '<div class="table-responsive col-md-8">';
+						echo '<table class="table table-striped">';
+						echo '<tr>';
+						echo '<th>Envío</th>';
+						echo '<th>Puja</th>';
+						echo '<th>Origen</th>';
+						echo '<th>Destino</th>';
+						echo '<th>Finaliza</th>';
+						echo '</tr>';
+
+
+						$CONEXION_DB = 'mysql:host=127.0.0.1; dbname=subastatuenvio';
+						$USUARIO_DB = 'ig';
+						$PASS_DB = '';
+
+
+						try {
+							// Conecting with the DB
+							$db_subastatuenvio = new PDO($CONEXION_DB, $USUARIO_DB, $PASS_DB);
+
+							
+							$sql = "SELECT subastas.id_subasta, imagen, titulo, origen, destino, duracion, fecha_creacion, puja FROM subastas INNER JOIN pujas ON subastas.id_subasta = pujas.subasta WHERE pujas.transportista LIKE :email";
+
+							// preparing the query 
+							$resultado = $db_subastatuenvio->prepare($sql);
+
+							$resultado->execute(array(':email' => getCookie("email")));
+
+							$numRows = $resultado->rowCount();
+
+
+							if ($numRows>=1) {
+								// at least there is an auction
+								while ($registro = $resultado->fetch()) {
+
+									$horas_restantes = $registro['duracion'] - round((getdate()[0] - $registro['fecha_creacion']) / 60 / 60) . " h.";
+
+									if ($horas_restantes < 0) {
+										$horas_restantes = "Finalizada";
+									}
+
+									echo "<tr>";
+
+									// TITTLE + IMAGE
+									echo "<td>";
+									echo '<form action="subasta.php" method="post">';
+									echo '<input type="text" id="id_subasta" name="id_subasta" value="' . $registro['id_subasta'] . '" hidden>';
+									echo '<input class="btn btn-link" type="submit" value="' . $registro['titulo'] . '">';
+									echo '</form>';
+									echo '<img class="img-80x80" src="../' . $registro['imagen'] . '" alt="imagen">';
+									echo "</td>";
+
+
+									// BID
+									echo "<td>";
+									echo "<p>" . $registro['puja'] . "</p>";
+									echo "</td>";
+
+									// FROM
+									echo "<td>";
+									echo "<p>" . $registro['origen'] . "</p>";
+									echo "</td>";
+
+									// TO
+									echo "<td>";
+									echo "<p>" . $registro['destino'] . "</p>";
+									echo "</td>";
+
+									// REAMING TIME
+									echo "<td>";
+									echo "<p>" . $horas_restantes . "</p>";
+									echo "</td>";
+
+									echo "</tr>";
+								
+								}
+							}
+							echo "</table>";
+							echo "</div>";
+						}
+
+						catch (PDOException $e) {
+							die("Error: " .$e);
+						}
+
+					}
+
+
+				}
+
+				// FUNCTIONS SUPPORTERS
+
+				function getCookie ($cookie_name) {
+
+					if(!isset($_COOKIE[$cookie_name])) {
+						return null;
+					} 
+					else {
+					    return $_COOKIE[$cookie_name];
+					}
+				}
+
+				function getCurrentBid ($id_auction) {
+					$current_bid = 'Ninguna';
+
+					$CONEXION_DB = 'mysql:host=127.0.0.1; dbname=subastatuenvio';
+					$USUARIO_DB = 'ig';
+					$PASS_DB = '';
+
+
+					try {
+					// Conecting with the DB
+						$db_subastatuenvio = new PDO($CONEXION_DB, $USUARIO_DB, $PASS_DB);
+
+						$sql1 = "SELECT MAX(puja) FROM pujas WHERE subasta = :subasta";
+
+						$result = $db_subastatuenvio->prepare($sql1);
+
+						$result->execute(array(":subasta" => $id_auction));
+
+						$numRows = $result->rowCount();
+
+						if ($numRows > 0) {
+							$current_bid = $result->fetch()[0];
+						}
+
+						return $current_bid . " €";
+					}
+					catch (PDOException $e) {
+						die("Error: " .$e);
+					}
+
+				}
+		?>
+
+		</article>
+
+		<article class="container">
+			<button class="btn btn-default" id="btnSalir">CERRAR SESIÓN</button>
+		</article>
+	</section>
+	
 
 
 	<!-- PIE DE PAGINA -->

@@ -32,23 +32,16 @@
 		$num_trans = $result_trans->fetch()[0];
 		$num_subas = $result_subas->fetch()[0];
 
-		echo $num_remit;
-		echo "<br>";
-		echo $num_trans;
-		echo "<br>";
-		echo $num_subas;
+
+		$data = new stdClass();
+
+		$data->numRemit = $num_remit;
+		$data->numTrans = $num_trans;
+		$data->numSubas = $num_subas;
 
 
-
-		// $data = new stdClass();
-
-		// $data->numRemit = mb_convert_encoding($datos['nombre'], 'UTF-8', 'ISO-8859-1');
-		// $data->numTrans = mb_convert_encoding($datos['apellidos'], 'UTF-8', 'ISO-8859-1');
-		// $data->numSubas =  mb_convert_encoding($datos['direccion'], 'UTF-8', 'ISO-8859-1');
 		
-		
-
-		// echo json_encode($data);
+		echo json_encode($data);
 
 	}
 	catch (PDOException $e) {
