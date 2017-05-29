@@ -65,9 +65,9 @@
 		<article class="container">
 			<?php
 
-				// DATA BASE CONNECTION & QUERY
 				if(count($_COOKIE) > 0) {
-    
+					
+					// REMITENTE    
     				if (strcmp(getCookie("role"), "remitentes") == 0) {
 
     					echo "<h3>Tus Subastas</h3>";
@@ -164,6 +164,7 @@
 
 					}
 
+					// TRANSPORTISTA
 					if (strcmp(getCookie("role"), "transportistas") == 0) {
 						echo "<h3>Tus Pujas</h3>";
 
@@ -188,7 +189,7 @@
 							$db_subastatuenvio = new PDO($CONEXION_DB, $USUARIO_DB, $PASS_DB);
 
 							
-							$sql = "SELECT subastas.id_subasta, imagen, titulo, origen, destino, duracion, fecha_creacion, puja FROM subastas INNER JOIN pujas ON subastas.id_subasta = pujas.subasta WHERE pujas.transportista LIKE :email";
+							$sql = "SELECT subastas.id_subasta, imagen, titulo, origen, destino, duracion, fecha_creacion, puja FROM subastas INNER JOIN pujas ON subastas.id_subasta = pujas.subasta WHERE pujas.transportista LIKE :email ORDER BY duracion";
 
 							// preparing the query 
 							$resultado = $db_subastatuenvio->prepare($sql);

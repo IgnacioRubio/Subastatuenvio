@@ -22,10 +22,6 @@ function updateData () {
 	ajax.onreadystatechange = function () {
 		if (ajax.readyState == 4) {
 
-			// alert("Hollla");
-
-			// alert(ajax.responseText);
-
 			var data = JSON.parse(ajax.responseText);
 
 			numRemitentes.innerHTML = data.numRemit;

@@ -62,40 +62,48 @@
 			<div class="row">
 				<div class="col-md-4">
 					
-					<form class="" action="" method="post">
+					<form id="form_filtro" class="" action="" method="post">
 						<div class="form-group">
+
+							<?php
+
+							$cat = isset($_POST['cat']) ? $_POST['cat'] : '';
+							$orig = isset($_POST['origen']) ? $_POST['origen'] : '';
+							$dest = isset($_POST['destino']) ? $_POST['destino'] : '';
+
+							?>
 							<h4>CATEGORÍAS</h4>
 
 							<div class="radio"> 
-								<label><input value="Hogar" id="cat" name="cat" type="radio"> Hogar (41)</label>
+								<label><input value="Hogar" id="cat" name="cat" type="radio" <?php if ($cat == "Hogar") echo "checked"; ?>> Hogar (<span id="spanHogar"></span>)</label>
 							</div>
 
 							<div class="radio"> 
-								<label><input value="Vehiculos" id="cat" name="cat" type="radio"> Vehículos (42)</label>
+								<label><input value="Vehiculos" id="cat" name="cat" type="radio" <?php if ($cat == "Vehiculos") echo "checked"; ?>> Vehículos (<span id="spanVehiculo"></span>)</label>
 							</div>
 
 							<div class="radio"> 
-								<label><input value="Carga Parcial" id="cat" name="cat" type="radio"> Carga parcial (75)</label>
+								<label><input value="Carga Parcial" id="cat" name="cat" type="radio" <?php if ($cat == "Carga Parcial") echo "checked"; ?>> Carga parcial (<span id="spanParcial"></span>)</label>
 							</div>
 
 							<div class="radio"> 
-								<label><input value="Carga Completa" id="cat" name="cat" type="radio"> Carga completa (30)</label>
+								<label><input value="Carga Completa" id="cat" name="cat" type="radio" <?php if ($cat == "Carga Completa") echo "checked"; ?>> Carga completa (<span id="spanCompleta"></span>)</label>
 							</div>
 
 							<div class="radio"> 
-								<label><input value="Animales" id="cat" name="cat" type="radio"> Animales (19)</label>
+								<label><input value="Animales" id="cat" name="cat" type="radio" <?php if ($cat == "Animales") echo "checked"; ?>> Animales (<span id="spanAnimales"></span>)</label>
 							</div>
 
 							<div class="radio"> 
-								<label><input value="Industrial" id="cat" name="cat" type="radio"> Industrial y empresarial (14)</label>
+								<label><input value="Industrial" id="cat" name="cat" type="radio" <?php if ($cat == "Industrial") echo "checked"; ?>> Industrial y empresarial (<span id="spanIndustrial"></span>)</label>
 							</div>
 
 							<div class="radio"> 
-								<label><input value="Alimentacion" id="cat" name="cat" type="radio"> Alimentación (20)</label>
+								<label><input value="Alimentacion" id="cat" name="cat" type="radio" <?php if ($cat == "Alimentacion") echo "checked"; ?>> Alimentación (<span id="spanAlimentacion"></span>)</label>
 							</div>
 
 							<div class="radio"> 
-								<label><input value="Otros" id="cat" name="cat" type="radio"> Otros (0)</label>
+								<label><input value="Otros" id="cat" name="cat" type="radio" <?php if ($cat == "Otros") echo "checked"; ?>> Otros (<span id="spanOtros"></span>)</label>
 							</div>
 
 						</div>
@@ -104,7 +112,7 @@
 							
 							<h4>ORIGEN</h4>
 
-							<input id="origen" name="origen"type="text" placeholder="Localidad">
+							<input id="origen" name="origen" type="text" placeholder="Localidad" <?php if ($orig != "") echo "value=' " . $orig . "'"; ?>>
 							p. ej.: Avilés
 						</div>
 
@@ -112,7 +120,7 @@
 							
 							<h4>DESTINO</h4>
 
-							<input id="destino" name="destino" type="text" placeholder="Localidad">
+							<input id="destino" name="destino" type="text" placeholder="Localidad" <?php if ($dest != "") echo "value=' " . $dest . "'"; ?>>
 							p. ej.: Alicante
 						</div>			
 						
@@ -156,10 +164,20 @@
 							// preparing the query 
 							$resultado = $db_subastatuenvio->prepare($sql);
 
-							$cat = '%';
-							$orig = '%';
-							$dest = '%';
 
+							if ($cat == "") {
+								$cat = '%';
+
+							}
+
+							if ($orig == "") {
+								$orig = '%';
+							
+							}
+
+							if ($dest == "") {
+								$dest = '%';
+							}
 
 
 							$resultado->execute(array(':cat' => strtoupper($cat), ':orig' => strtoupper($orig), ':dest' => strtoupper($dest)));
@@ -216,9 +234,6 @@
 									}
 								}
 
-							}
-							else {
-								echo "No hay datos";
 							}
 						}
 
@@ -286,6 +301,7 @@
 		</div>
 	</footer>
 
+	<script src="../js/subastas_filtro.js"></script>
 	<script src="../js/roles.js"></script>
 
 

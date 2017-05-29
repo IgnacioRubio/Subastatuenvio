@@ -1,26 +1,12 @@
 
 
 document.getElementById("liMenuIniciar").style.display = "initial";
-document.getElementById("liMenuRegistro").style.display = "initial"; // none erase it
+document.getElementById("liMenuRegistro").style.display = "initial";
 
 document.getElementById("liMenuEnviar").style.display = "none";
 document.getElementById("liMenuPerfil").style.display = "none";
 
 // Restring access to users depending on which role they are playing
-
-
-
-// if they are sender or transporters i will do something
-
-// do something :
-
-// they must not access to sing in
-
-// they must not access to sing up
-
-// they should see their name display on the header with a greeting
-
-// they can log out
 
 var cookie = document.cookie;
 
