@@ -191,8 +191,7 @@
 
 									$horas_restantes = $registro['duracion'] - round((getdate()[0] - $registro['fecha_creacion']) / 60 / 60);
 
-									//if ($horas_restantes >= 0) {
-									if (true) {
+									if ($horas_restantes >= 0) {
 
 										echo "<tr>";
 
