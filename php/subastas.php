@@ -75,35 +75,35 @@
 							<h4>CATEGORÍAS</h4>
 
 							<div class="radio"> 
-								<label><input value="Hogar" id="cat" name="cat" type="radio" <?php if ($cat == "Hogar") echo "checked"; ?>> Hogar (<span id="spanHogar"></span>)</label>
+								<label><input value="Hogar" id="cat" name="cat" type="radio" <?php if ($cat == "Hogar") echo "checked"; ?>> Hogar (<span class="text-danger" id="spanHogar"></span>)</label>
 							</div>
 
 							<div class="radio"> 
-								<label><input value="Vehiculos" id="cat" name="cat" type="radio" <?php if ($cat == "Vehiculos") echo "checked"; ?>> Vehículos (<span id="spanVehiculo"></span>)</label>
+								<label><input value="Vehiculos" id="cat" name="cat" type="radio" <?php if ($cat == "Vehiculos") echo "checked"; ?>> Vehículos (<span class="text-danger" id="spanVehiculo"></span>)</label>
 							</div>
 
 							<div class="radio"> 
-								<label><input value="Carga Parcial" id="cat" name="cat" type="radio" <?php if ($cat == "Carga Parcial") echo "checked"; ?>> Carga parcial (<span id="spanParcial"></span>)</label>
+								<label><input value="Carga Parcial" id="cat" name="cat" type="radio" <?php if ($cat == "Carga Parcial") echo "checked"; ?>> Carga parcial (<span class="text-danger" id="spanParcial"></span>)</label>
 							</div>
 
 							<div class="radio"> 
-								<label><input value="Carga Completa" id="cat" name="cat" type="radio" <?php if ($cat == "Carga Completa") echo "checked"; ?>> Carga completa (<span id="spanCompleta"></span>)</label>
+								<label><input value="Carga Completa" id="cat" name="cat" type="radio" <?php if ($cat == "Carga Completa") echo "checked"; ?>> Carga completa (<span class="text-danger" id="spanCompleta"></span>)</label>
 							</div>
 
 							<div class="radio"> 
-								<label><input value="Animales" id="cat" name="cat" type="radio" <?php if ($cat == "Animales") echo "checked"; ?>> Animales (<span id="spanAnimales"></span>)</label>
+								<label><input value="Animales" id="cat" name="cat" type="radio" <?php if ($cat == "Animales") echo "checked"; ?>> Animales (<span class="text-danger" id="spanAnimales"></span>)</label>
 							</div>
 
 							<div class="radio"> 
-								<label><input value="Industrial" id="cat" name="cat" type="radio" <?php if ($cat == "Industrial") echo "checked"; ?>> Industrial y empresarial (<span id="spanIndustrial"></span>)</label>
+								<label><input value="Industrial" id="cat" name="cat" type="radio" <?php if ($cat == "Industrial") echo "checked"; ?>> Industrial y empresarial (<span class="text-danger" id="spanIndustrial"></span>)</label>
 							</div>
 
 							<div class="radio"> 
-								<label><input value="Alimentacion" id="cat" name="cat" type="radio" <?php if ($cat == "Alimentacion") echo "checked"; ?>> Alimentación (<span id="spanAlimentacion"></span>)</label>
+								<label><input value="Alimentacion" id="cat" name="cat" type="radio" <?php if ($cat == "Alimentacion") echo "checked"; ?>> Alimentación (<span class="text-danger" id="spanAlimentacion"></span>)</label>
 							</div>
 
 							<div class="radio"> 
-								<label><input value="Otros" id="cat" name="cat" type="radio" <?php if ($cat == "Otros") echo "checked"; ?>> Otros (<span id="spanOtros"></span>)</label>
+								<label><input value="Otros" id="cat" name="cat" type="radio" <?php if ($cat == "Otros") echo "checked"; ?>> Otros (<span class="text-danger" id="spanOtros"></span>)</label>
 							</div>
 
 						</div>
@@ -112,7 +112,7 @@
 							
 							<h4>ORIGEN</h4>
 
-							<input id="origen" name="origen" type="text" placeholder="Localidad" <?php if ($orig != "") echo "value=' " . $orig . "'"; ?>>
+							<input id="origen" name="origen" type="text" placeholder="Localidad" <?php if ($orig != "") echo "value='" . $orig . "'"; ?>>
 							p. ej.: Avilés
 						</div>
 
@@ -120,7 +120,7 @@
 							
 							<h4>DESTINO</h4>
 
-							<input id="destino" name="destino" type="text" placeholder="Localidad" <?php if ($dest != "") echo "value=' " . $dest . "'"; ?>>
+							<input id="destino" name="destino" type="text" placeholder="Localidad" <?php if ($dest != "") echo "value='" . $dest . "'"; ?>>
 							p. ej.: Alicante
 						</div>			
 						

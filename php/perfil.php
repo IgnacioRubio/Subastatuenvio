@@ -60,12 +60,13 @@
 	<!-- CUERPO -->
 	<section class="main container">
 
-		<h2>TU PERFIL</h2>
 
 		<article class="container">
 			<?php
 
 				if(count($_COOKIE) > 0) {
+
+					echo "<h2>" . getCookie("email") . "</h2>";
 					
 					// REMITENTE    
     				if (strcmp(getCookie("role"), "remitentes") == 0) {

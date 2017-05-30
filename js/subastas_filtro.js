@@ -8,17 +8,40 @@ document.getElementById("spanIndustrial").innerHTML = "0";
 document.getElementById("spanAlimentacion").innerHTML = "0";
 document.getElementById("spanOtros").innerHTML = "0";
 
+var form = document.getElementById("form_filtro");
+
+form.addEventListener("reset", resetForm);
+
+function resetForm (e) {
+
+	var event = e || window.event;
+	event.preventDefault();
+
+	// values to nothing
+	document.getElementById("origen").value = "";
+	document.getElementById("destino").value = "";
+
+	// checked to unchechked
+	resetCheckedRadio("cat");
+
+
+
+}
+
 
 
 window.onload = function () {
 	
 	var ajax = getXMLHTTP();
 
+
 	ajax.open("POST", "subastas_filtro.php");
 
 	ajax.onreadystatechange = function () {
 		if (ajax.readyState == 4) {
-			
+
+
+
 			var data = JSON.parse(ajax.responseText);
 
 			document.getElementById("spanHogar").innerHTML = data.numHogar;
@@ -38,7 +61,7 @@ window.onload = function () {
 }
 
 
-
+//
 function getXMLHTTP () {
 	var obj = null;
 
@@ -65,4 +88,18 @@ function getXMLHTTP () {
 	return obj;
 }
 
+// reset radio button checked
 
+function resetCheckedRadio (name) {
+	var groupRadio = document.getElementsByName(name);
+
+	var checked = false;
+	var i = 0;
+
+	while (i < groupRadio.length) {
+
+		groupRadio[i].checked = false;
+
+		i++;
+	}
+}
