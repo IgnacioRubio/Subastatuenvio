@@ -75,7 +75,7 @@
 					$db_subastatuenvio = new PDO($CONEXION_DB, $USUARIO_DB, $PASS_DB);
 
 							
-					$sql = "SELECT titulo, imagen, origen, destino, duracion, descripcion, medida, peso, fecha_creacion FROM subastas WHERE id_subasta LIKE :id_subasta";
+					$sql = "SELECT titulo, imagen, origen, destino, duracion, descripcion, medida, peso, fecha_creacion, remitente FROM subastas WHERE id_subasta LIKE :id_subasta";
 
 					// preparing the query 
 					$resultado = $db_subastatuenvio->prepare($sql);
@@ -95,6 +95,11 @@
 							echo "<div>";
 							echo "<h5>TÍTULO:</h5>";
 							echo "<p>" . $registro['titulo'] . "</p>";
+							echo "</div>";
+
+							echo "<div>";
+							echo "<h5>Remitente:</h5>";
+							echo "<p>" . $registro['remitente'] . "</p>";
 							echo "</div>";
 
 							echo "<div>";
@@ -235,7 +240,7 @@
 
 					$numRows = $resultado->rowCount();
 					
-					echo '<div class="table-responsive col-md-8">';
+					echo '<div class="table-responsive">';
 					echo '<h5>PUJAS:</h5>';
 					echo '<table class="table table-striped">';
 
@@ -268,7 +273,7 @@
 			
 
 			<!-- ROLE TRANSPORTISTA -->
-			<div>
+			<div class="container">
 
 				<p id="pMess" class="bg-warning padding-15 gap-to-40" hidden></p>
 				<p id="pMessSucc" class="bg-success padding-15 gap-to-40" hidden></p>
@@ -301,6 +306,7 @@
 
 						$horas_restantes = $registro['duracion'] - round((getdate()[0] - $registro['fecha_creacion']) / 60 / 60);
 
+						// if (true) {
 						if ($horas_restantes >= 0) {
 
 							echo "<form id='form_puja' action='crear_puja.php' method='post'>";
