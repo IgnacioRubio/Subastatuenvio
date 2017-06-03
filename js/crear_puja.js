@@ -33,7 +33,7 @@ function creationBid () {
 			if (ajax.responseText) {
 
 				document.getElementById("pMessSucc").hidden = false;
-				document.getElementById("pMessSucc").innerHTML = "La puja se creo con éxito. Si no ve la puja, refresque la página.";
+				document.getElementById("pMessSucc").innerHTML = "La puja se creó con éxito. Si no ve la puja, refresque la página.";
 			}
 			else {
 				document.getElementById("pMess").hidden = false;
