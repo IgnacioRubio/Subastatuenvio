@@ -71,6 +71,8 @@
 							$orig = isset($_POST['origen']) ? $_POST['origen'] : '';
 							$dest = isset($_POST['destino']) ? $_POST['destino'] : '';
 
+							// echo getdate()[0] . "<br>";
+
 							?>
 							<h4>CATEGORÍAS</h4>
 

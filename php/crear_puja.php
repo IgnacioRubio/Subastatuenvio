@@ -17,7 +17,7 @@
 
 
 		// INSERT BID
-		$sql_query = "SELECT * FROM pujas WHERE subasta LIKE :id_subasta AND transportista LIKE :email AND puja = :puja";
+		$sql_query = "SELECT * FROM pujas WHERE subasta LIKE :id_subasta AND transportista LIKE :email AND puja <= :puja";
 		$sql_insert = "INSERT INTO pujas (subasta, transportista, puja) VALUES (:id_subasta, :email, :puja)";
 		
 
@@ -30,7 +30,7 @@
 		$numRows = $resultado->rowCount();
 
 
-		if ($numRows == 1) {
+		if ($numRows > 0) {
 			// bid repeat
 			echo false;
 		}
